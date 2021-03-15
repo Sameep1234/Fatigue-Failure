@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import math
+from scipy.optimize import fsolve
 # import sympy as sym
 
 '''
@@ -28,23 +29,46 @@ List of inbuilt libraries/functions used
 3. numpy.linalg for checking the answers
 
 '''
-
 n = int(input("Number of applied cycles: "))
 f = float(input("Fatigue limit strength fraction: "))
 Sa = float(input("Alternating stress (in MPa): "))
-[myu1, sigma1] = float(input("Mean and stadard deviation of ultimate strength"))
-[myu2, sigma2] = float(input("Mean and stadard deviation of Fatigue Limit"))
+myu1 = float(input("Mean of Ultimate Strength (Su): "))
+sigma1 = float(input("Standard deviation of Ultimate Strength (Su): "))
+myu2 = float(input("Mean of Fatigue Limit (Se): "))
+sigma2 = float(input("Standard Deviation of Fatigue Limit (Se): "))
 
 PI = math.pi
-Su = (1/math.sqrt(2*PI*sigma1**2))*(e**(-1*((x - myu1)**2)/2*sigma1**2))
-Se = (1/math.sqrt(2*PI*sigma2**2))*(e**(-1*((y - myu2)**2)/2*sigma2**2))
+e = 2.718281828459045
+Su = (1/math.sqrt(2*PI*sigma1**2))*(e**(-1*((Su - myu1)**2)/2*sigma1**2))
+Se = (1/math.sqrt(2*PI*sigma2**2))*(e**(-1*((Se - myu2)**2)/2*sigma2**2))
 U1 = (Su - myu1)/sigma1
 U2 = (Se - myu2)/sigma2
 
 
-power = -1*math.log((f*U1)/U2, 10)/3
-temp = ((U1 - Sm) * U1 * (f**2))/(Sa*U2)
-Zn = 1 - n*((temp)**power)
+power = -1*math.log((f*(U1*sigma1 + myu1))/U2*sigma2 + myu2, 10)/3
+temp = (Snf*(U2*sigma2 + myu2)) / ((f * (U1*sigma1 + myu1))**2)
+Zn = 1 - n/((temp)**power)
+
+
+'''Lagrange Multiplier Try'''
+def func(X):
+    x = X[0]
+    y = X[1]
+    L = X[2] # this is the multiplier. lambda is a reserved keyword in python
+    return U1**2 + U2**2 + L * (Zn)
+
+def dfunc(X):
+    dLambda = np.zeros(len(X))
+    h = 1e-3 # this is the step size used in the finite difference.
+    for i in range(len(X)):
+        dX = np.zeros(len(X))
+        dX[i] = h
+        dLambda[i] = (func(X+dX)-func(X-dX))/(2*h)
+    return dLambda
+
+#For Finding Minimum
+X2 = fsolve(dfunc, [-1, -1, 0])
+print(X2, func(X2))
 
 
 '''Differentiation'''
@@ -75,15 +99,6 @@ Zn = 1 - n*((temp)**power)
 #     return (1-x[0]**2) +(x[1]-x[0]**2)**2
 # grad2 = nd.Gradient(rosen)([1, 2]) 
 # print("Gradient of (1-x ^ 2)+(y-x ^ 2)^2 at (1, 2) is ", grad2) 
-
-
-
-
-
-
-
-
-
 
 
 '''Misc'''
