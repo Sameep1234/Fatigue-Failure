@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 from scipy.optimize import fsolve
+import random
 # import sympy as sym
 
 '''
@@ -29,24 +30,43 @@ List of inbuilt libraries/functions used
 3. numpy.linalg for checking the answers
 
 '''
-n = int(input("Number of applied cycles: "))
-f = float(input("Fatigue limit strength fraction: "))
-Sa = float(input("Alternating stress (in MPa): "))
-myu1 = float(input("Mean of Ultimate Strength (Su): "))
-sigma1 = float(input("Standard deviation of Ultimate Strength (Su): "))
-myu2 = float(input("Mean of Fatigue Limit (Se): "))
-sigma2 = float(input("Standard Deviation of Fatigue Limit (Se): "))
+n = 150000
+myu1 = 310
+sigma1 = 15
+myu2 = 95
+sigma2 = 5
+Sa = 220
+f = 0.9
+Snf = Sa
+Su = 311
+Se = 100
+print("Su ", Su, " Se ", Se) 
 
+# for i in range(0, 100):
+#     x.append(random.randInt(1, n))
+#     y.append(random.randInt(1, n))
+
+    
 PI = math.pi
 e = 2.718281828459045
-Su = (1/math.sqrt(2*PI*sigma1**2))*(e**(-1*((Su - myu1)**2)/2*sigma1**2))
-Se = (1/math.sqrt(2*PI*sigma2**2))*(e**(-1*((Se - myu2)**2)/2*sigma2**2))
-U1 = (Su - myu1)/sigma1
-U2 = (Se - myu2)/sigma2
+temp = (-1*((Su - myu1)**2) / 2*(sigma1**2))
+print("answer" , temp)
+pdfSu = math.exp(temp)
+print("LOCHO=" , pdfSu)
+print ("answer" , temp)
+print(pdfSu)
+pdfSu = pdfSu/math.sqrt(2*PI*(sigma1**2))
+print("ASONMGIDAFN: ", -1*((Se - myu2)**2)/2*sigma2**2)
+pdfSe = (1/math.sqrt(2*PI*sigma2**2))*(e**(-1*((Se - myu2)**2)/2*sigma2**2))
+print(pdfSu, pdfSe)
+U1 = (pdfSu - myu1)/sigma1
+U2 = (pdfSe - myu2)/sigma2
 
+print("U1 ", U1, " U2 ", U2)
 
 power = -1*math.log((f*(U1*sigma1 + myu1))/U2*sigma2 + myu2, 10)/3
 temp = (Snf*(U2*sigma2 + myu2)) / ((f * (U1*sigma1 + myu1))**2)
+print("temp: ", temp)
 Zn = 1 - n/((temp)**power)
 
 
@@ -102,9 +122,18 @@ print(X2, func(X2))
 
 
 '''Misc'''
-# a = (f*Su)**2/U2
-# temp = f*Su/Se
+# a = (f*pdfSu)**2/U2
+# temp = f*pdfSu/pdfSe
 # b = (-1*(math.log(temp, 10)))/3
-# Snf = (Sa*Su)/(Su - Sm)
+# Snf = (pdfSa*pdfSu)/(pdfSu - Sm)
 # Nf = (Snf/a)**(1/b)
 # Dn = n/Nf
+
+'''Input'''
+# n = int(input("Number of applied cycles: "))
+# f = float(input("Fatigue limit strength fraction: "))
+# Sa = float(input("Alternating stress (in MPa): "))
+# myu1 = float(input("Mean of Ultimate Strength (Su): "))
+# sigma1 = float(input("Standard deviation of Ultimate Strength (Su): "))
+# myu2 = float(input("Mean of Fatigue Limit (Se): "))
+# sigma2 = float(input("Standard Deviation of Fatigue Limit (Se): "))
