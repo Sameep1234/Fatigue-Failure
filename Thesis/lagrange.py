@@ -44,7 +44,7 @@ def dfunc(X,n):
     for i in range(len(X)):
         dX = np.zeros(len(X))
         dX[i] = h
-        dLambda[i] = (func(X+dX,n)-func(X-dX,n))/(2*h);
+        dLambda[i] = (func(X+dX,n)-func(X-dX,n))/(2*h)
     return dLambda
 
 
