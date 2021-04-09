@@ -1,6 +1,8 @@
 syms x y r ll %Clear the variables
 for n =0:50000:300000 %Loop to iterate and compute the values
 f=x^2+y^2; %Lagrange Equation
+
+%1100 = sigmaSe*Snf and 20900 = Snf*myuSe
 g=1 - n/(((1100*y + 20900)/(13.5*x + 279)^2)^((1) / (-(1/3)*log((13.5*x +279)/(5*y + 95)))));%Constraint for lagrange
 L=f-r*g;%Lagrange Theory Equation
 gradL=gradient(L);% Find Gradient and then set it to 0
@@ -30,7 +32,9 @@ mu = 0;
 sigma =sqrt((T^2)*(25)+(T2^2)*(225));
 disp(sigma^2);
 pd = makedist('Normal','mu',mu,'sigma',sigma);
+
 u= -(ys(i)*T)-(xs(i)*T2);
+plot(u, n);
 disp(u);
 c=double(cdf(pd,u));
 disp(c);

@@ -1,7 +1,4 @@
-#The method that matters is from 870 to 1187
 import matplotlib
-# matplotlib.use("TkAgg")
-# from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 
 from matplotlib import style
 
