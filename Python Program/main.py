@@ -123,7 +123,6 @@ style.use("dark_background")
 
 f1 = plt.figure(figsize=(10,7))
 plt.plot(a1,cdf, label= str(sa)+" Mpa", color='#4dffdb', linewidth=1)
-plt.plot(a1,cdf, label= str(sa)+" Mpa", color='#4dffdb', linewidth=1)
 
 plt.xlabel("Number of Cycles")
 plt.ylabel("Probability of Failure")
