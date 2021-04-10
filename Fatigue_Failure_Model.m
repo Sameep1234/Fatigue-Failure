@@ -32,9 +32,9 @@ mu = 0;
 sigma =sqrt((T^2)*(25)+(T2^2)*(225));
 disp(sigma^2);
 pd = makedist('Normal','mu',mu,'sigma',sigma);
-
+disp(pd);
 u= -(ys(i)*T)-(xs(i)*T2);
-plot(u, n);
+
 disp(u);
 c=double(cdf(pd,u));
 disp(c);
