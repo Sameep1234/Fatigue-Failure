@@ -22,18 +22,27 @@ from scipy.optimize import fsolve
 
 
 smax = 220
-smin = 0
+smin = -smax
 
+#sa = amplitude of the stress wave
 sa = (smax - smin)/2
+
+#sm = mean of stress = 0
 sm = (smax + smin)/2  #doubt
 
+# Myu of su 
 su = 310
+
+#fatigue strength fraction
 f = 0.9
 
+#corrected alternating stress
 snf = sa/(1-(sm/su))  
 
+#external factor 1
 cload = 1
 
+#external factor 1
 size = 1
 if size <= 8:
     csize = 1
@@ -102,9 +111,8 @@ meanD = a1/nf
 print("type of: ", type(meanD))
 print('meanD ', meanD[0])
 
-
 Z = -(1-meanD)/np.sqrt((sdDc**2)+meanD*((sd/nf)**2))
-Z = meanD - 
+
 #CDF
 pof1 =(1.0 +erf(Z/np.sqrt(2)))/2
 
@@ -118,7 +126,7 @@ plt.ylabel("Probability of Failure")
 
 # ax = plt.subplot(111)
 
-# plt.show()
+plt.show()
 
 
 
