@@ -39,10 +39,9 @@ f = 0.9
 #corrected alternating stress
 snf = sa/(1-(sm/su))  
 
-#external factor 1
+#Innovation using external factors
 cload = 1
 
-#external factor 1
 size = 1
 if size <= 8:
     csize = 1
