@@ -3,6 +3,12 @@ warnings.filterwarnings('ignore', 'The iteration is not making good progress')
 return (u1**2+u2**2  -
 L*(Sa/(1-Sm/(sigma1*u1 + mu1))/((f*(sigma1*u1 + mu1))**2)/(sigma2*u2 + mu2))**
 1/-1/3*(f*(sigma1*u1 + mu1))/(sigma2*u2 + mu2) -n)'''
+
+
+# (220/((0.9*(15*u1 + 310))^2)/(5*u2 + 95))^
+# 1/-1/3*(0.9*(15*u1 + 310))/(5*u2 + 95) = 15000
+
+
 import math
 import numpy as np
 from decimal import Decimal
